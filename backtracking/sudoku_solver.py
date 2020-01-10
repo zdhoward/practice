@@ -42,13 +42,21 @@ def main():
 
 
 def solve(_board):
+    """
+    Recursively solve each solvable node
+    If no solutions are available, revert
+    to the previous step.
+    """
     global solved_board
     x, y = nextSolvable(_board)
     if x == -1 and y == -1:
+        # -1, -1 = no more solvable nodes
+        # meaning the entire board is solved
         print("Completed")
         show(solved_board)
         return True
     else:
+        # start trying numbers in the next empty node
         for i in range(1, 10):
             if isAllowed(_board, x, y, i):
                 _board[x][y] = i
@@ -61,6 +69,10 @@ def solve(_board):
 
 
 def isAllowed(_board, _x, _y, _num):
+    """
+    Check if the x and y are within bounds
+    Check that the suggested number is valid
+    """
     if (
         _x >= 0
         and _x < 9
@@ -75,6 +87,9 @@ def isAllowed(_board, _x, _y, _num):
 
 
 def nextSolvable(_board):
+    """
+    Retrieve the next unsolved node on the board
+    """
     global solved_board
     for x in range(9):
         for y in range(9):
@@ -85,6 +100,9 @@ def nextSolvable(_board):
 
 
 def show(_board):
+    """
+    Cleanly display the board
+    """
     system("clear")
     for row in _board:
         print(row)
