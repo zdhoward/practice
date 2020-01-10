@@ -26,14 +26,12 @@ def solve(board, new_x, new_y, pos):
     if isAllowed(new_x, new_y):
         old_val = board[new_x][new_y]
         board[new_x][new_y] = 2
-        pos += 1
         # print("Pos: ", pos, " | x: ", new_x, " | y: ", new_y)
         if isCompleted():
             return True
         for x, y in moves:
-            if solve(board, new_x + x, new_y + y, pos):
+            if solve(board, new_x + x, new_y + y, pos + 1):
                 return True
-        # print("Backtracking")
         board[new_x][new_y] = old_val
     return False
 
