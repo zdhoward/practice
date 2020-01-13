@@ -5,25 +5,33 @@ from colorama import Fore
 size = 8
 board = [[0 for x in range(size)] for y in range(size)]
 
+solved_board = board
+
 moves = [(2, 1), (1, 2), (2, -1), (-1, 2), (-2, 1), (1, -2), (-2, -1), (-1, -2)]
 
-speed = 50
+speed = 0
 
 highest_pos = 0
 backtrack_pos = 0
 
+show_progress = False
+
 
 def main():
+    global solved_board
     solve(board, 0, 0, 1)
+    show(solved_board)
 
 
 def solve(_board, cur_x, cur_y, _pos):
-    global highest_pos, backtrack_pos
+    global highest_pos, backtrack_pos, solved_boards
     if isAllowed(_board, cur_x, cur_y):
         if _pos > highest_pos:
             highest_pos = _pos
-        show(_board, cur_x, cur_y, _pos)
+        if show_progress:
+            show(_board, cur_x, cur_y, _pos)
         _board[cur_x][cur_y] = _pos
+        solved_board = board
         if isCompleted(_board):
             return True
         for x, y in moves:

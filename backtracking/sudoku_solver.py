@@ -1,7 +1,10 @@
 from math import ceil
 from os import system
 from time import sleep
+from random import shuffle
+from time import process_time as time
 
+# easy
 board = [
     [0, 8, 0, 0, 7, 2, 0, 0, 1],
     [0, 5, 0, 0, 3, 1, 6, 4, 9],
@@ -14,6 +17,7 @@ board = [
     [1, 6, 5, 9, 0, 0, 3, 0, 0],
 ]
 
+# easy
 board = [
     [0, 0, 6, 0, 4, 0, 0, 9, 7],
     [0, 4, 0, 7, 3, 0, 0, 1, 0],
@@ -26,19 +30,35 @@ board = [
     [8, 6, 0, 0, 2, 0, 3, 0, 0],
 ]
 
+# very hard
+board = [
+    [8, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 3, 6, 0, 0, 0, 0, 0],
+    [0, 7, 0, 0, 9, 0, 2, 0, 0],
+    [0, 5, 0, 0, 0, 7, 0, 0, 0],
+    [0, 0, 0, 0, 4, 5, 7, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0, 3, 0],
+    [0, 0, 1, 0, 0, 0, 0, 6, 8],
+    [0, 0, 8, 5, 0, 0, 0, 1, 0],
+    [0, 9, 0, 0, 0, 0, 4, 0, 0],
+]
+
 
 solved_board = board
 
-speed = 50
+speed = 0
 
 show_progress = False
 
 
 def main():
+    start = time() * 1000
     if solve(board):
         print("Solvable")
     else:
         print("Not Solvable")
+    end = time() * 1000
+    print(int(end - start), "ms elapsed")
 
 
 def solve(_board):
@@ -57,7 +77,7 @@ def solve(_board):
         return True
     else:
         # start trying numbers in the next empty node
-        for i in range(1, 10):
+        for i in my_shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]):
             if isAllowed(_board, x, y, i):
                 _board[x][y] = i
                 if show_progress:
@@ -142,6 +162,12 @@ def validate_box(_board, _x, _y, _num):
             if _board[_x][_y] != 0:
                 occurrences.append(_board[_x][_y])
     return True
+
+
+def my_shuffle(list):
+    shuffle(list)
+    shuffle(list)
+    return list
 
 
 if __name__ == "__main__":
