@@ -1,10 +1,10 @@
 from tinydb import TinyDB, Query
 from tinydb.queries import where
+
 from os import getcwd, urandom
 from os.path import join
-from scrypt import encrypt, decrypt
-import scrypt
 
+import scrypt
 
 DIR = getcwd()
 DB_FILE = "db.json"
