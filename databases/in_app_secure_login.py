@@ -4,7 +4,7 @@ from tinydb.queries import where
 from os import getcwd, urandom
 from os.path import join
 
-import scrypt
+import bcrypt
 
 DIR = getcwd()
 DB_FILE = "db.json"
@@ -17,6 +17,8 @@ def main():
     user = "test@mysite.com"
     password = "12345"
 
+    remove_user(user)
+
     if login(user, password):
         print("Logged in as", user)
     else:
@@ -27,13 +29,8 @@ def create_user(_name, _password):
     User = Query()
     result = users.search(User.name == _name)
     if not result:
-        salt = urandom(64)
         users.insert(
-            {
-                "name": str(_name),
-                "password": str(hash_password(_password, str(salt))),
-                "salt": str(salt),
-            }
+            {"name": str(_name), "password": hash_password(_password).decode()}
         )
         print("User {} created".format(_name))
         return True
@@ -56,8 +53,8 @@ def login(_name, _password):
     User = Query()
     result = users.search(User.name == _name)
     if result:
-        if str(result[0]["password"]) == str(
-            hash_password(_password, result[0]["salt"])
+        if bcrypt.checkpw(
+            _password.encode("utf-8"), result[0]["password"].encode("utf-8")
         ):
             return True
     else:
@@ -67,8 +64,8 @@ def login(_name, _password):
     return False
 
 
-def hash_password(_password, _salt):
-    return scrypt.hash(_password, _salt)
+def hash_password(_password):
+    return bcrypt.hashpw(_password.encode("utf-8"), bcrypt.gensalt())
 
 
 if __name__ == "__main__":
