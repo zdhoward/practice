@@ -1,3 +1,4 @@
+## only using basic notation below 1000
 roman_numerals = [
     (1000, "M"),
     (500, "D"),
