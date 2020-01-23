@@ -9,9 +9,11 @@ WALL = 1
 PATH = 2
 UNSET = 0
 
-speed = 0
+speed = 50
 
 solved = []
+
+show_progress = True
 
 
 def main():
@@ -34,7 +36,8 @@ def generate_maze(_maze, _x=0, _y=0):
         new_y = _y + move_y
         if isAllowed(_maze, new_x, new_y):
             maze[new_y][new_x] = PATH
-            # show(maze)
+            if show_progress:
+                show(maze)
             if isCompleted(maze):
                 solved = maze
                 return True
@@ -46,12 +49,15 @@ def generate_maze(_maze, _x=0, _y=0):
 
 def show(_maze):
     system("clear")
+    print("+" + "-" * 2 * len(_maze[0]) + "+")
     for row in _maze:
+        print("|", end="")
         for item in row:
             if item == UNSET:
                 item = " "
             print(item, end=" ")
-        print()
+        print("|")
+    print("+" + "-" * 2 * len(_maze[0]) + "+")
     sleep(speed / 1000)
 
 
