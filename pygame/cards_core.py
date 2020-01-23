@@ -32,6 +32,10 @@ class Deck:
         self._named_cards = _named_cards
         self.cards = self.generate_cards()
 
+    def __iadd__(self, _other):
+        self.cards += _other
+        return self
+
     def generate_cards(self):
         cards = []
         for suit in self.suits:
@@ -54,6 +58,9 @@ class Deck:
     def __str__(self):
         return self.show_cards()
 
+    def __len__(self):
+        return len(self.cards)
+
     def shuffle(self):
         random.shuffle(self.cards)
 
@@ -71,6 +78,12 @@ class Deck:
         cards = []
         for card in self.cards:
             cards.append(card.get())
+        return cards
+
+    def peek(self, _number=3):
+        cards = []
+        for num in range(_number):
+            cards.append(str(self.cards[num * -1]))
         return cards
 
 
@@ -111,6 +124,7 @@ def main():
     # print(hand.show())
     hand.sort()
     print(hand)
+    print(deck.peek())
 
 
 if __name__ == "__main__":
