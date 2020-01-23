@@ -1,6 +1,7 @@
 from os import system
 from time import sleep
 from colorama import Fore
+from random import shuffle
 
 size = 8
 board = [[0 for x in range(size)] for y in range(size)]
@@ -9,12 +10,15 @@ solved_board = board
 
 moves = [(2, 1), (1, 2), (2, -1), (-1, 2), (-2, 1), (1, -2), (-2, -1), (-1, -2)]
 
-speed = 0
+speed = 5
 
 highest_pos = 0
 backtrack_pos = 0
 
-show_progress = False
+show_progress = True
+
+tries = 0
+permutations = 64 ** 64
 
 
 def main():
@@ -25,6 +29,7 @@ def main():
 
 def solve(_board, cur_x, cur_y, _pos):
     global highest_pos, backtrack_pos, solved_boards
+    shuffle(moves)
     if isAllowed(_board, cur_x, cur_y):
         if _pos > highest_pos:
             highest_pos = _pos
@@ -59,7 +64,10 @@ def isAllowed(_board, _x, _y):
 
 
 def show(_board, _x=0, _y=0, _pos=0):
+    global tries, permutations
     system("clear")
+    tries += 1
+    print("%.2E" % tries, "/", "%.2E" % permutations, "TRIES: ", tries)
     print(
         "Pos: ",
         _pos,
