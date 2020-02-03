@@ -38,6 +38,8 @@ def main():
         (1, 2),
         (17, 3),
         (12, 1),
+        # (5, 7),
+        # (7, 17),
     ]  # 3 rotators, (starting_value, step_frequency) with the last rotator changing every key press
 
     cipher_text = enigma(plugboard, rotators, "encrypt", plain_text)
