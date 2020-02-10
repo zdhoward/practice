@@ -2,6 +2,8 @@ from flask import Flask, request, render_template
 import time
 import os
 
+from main import auth
+
 app = Flask(__name__)
 
 os.environ["FLASK_APP"] = __name__
@@ -17,8 +19,10 @@ def index():
     return render_template("test.html")
 
 
-def hello():
-    return "Hello, Alishia!"
+@app.route("/spotify/login", methods=["GET"])
+def spotify_login():
+    auth(request.url)
+    return request.url
 
 
 if __name__ == "__main__":
