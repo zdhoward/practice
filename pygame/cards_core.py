@@ -4,15 +4,15 @@ import operator
 
 
 class Card:
-    def __init__(self, _number, _suit="None", _value=0):
-        self.number = _number
+    def __init__(self, _name, _suit="None", _value=0):
+        self.name = _name
         self.value = int(_value)
         self.suit = _suit
 
     def __str__(self):
         if self.suit:
-            return "{} of {}".format(self.number, self.suit)
-        return str(self.number)
+            return "{} of {}".format(self.name, self.suit)
+        return str(self.name)
 
     def get(self):
         return self.value, self.suit
@@ -115,15 +115,19 @@ class Hand:
 
 
 def main():
+    test()
+
+
+def test():
     deck = Deck()
     deck.shuffle()
     hand = Hand(deck.deal(7))
     print(hand)
     deck.burn(1)
     hand += deck.deal(4)
-    # print(hand.show())
+    print(hand.show())
     hand.sort()
-    print(hand)
+    print(hand.get())
     print(deck.peek())
 
 
